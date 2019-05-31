@@ -1,5 +1,3 @@
-package robControlPanel;
-
 import java.net.Socket;
 
 public class Rob_Connection

@@ -1,5 +1,3 @@
-package robControlPanel;
-
 public class CmdInt {
 
     public static enum Type {

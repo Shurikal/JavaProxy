@@ -1,5 +1,3 @@
-package robControlPanel;
-
 import java.awt.color.CMMException;
 import java.net.ServerSocket;
 import java.net.Socket;

@@ -1,6 +1,3 @@
-package robControlPanel;
-
-
 import javax.swing.*;
 import java.awt.*;
 

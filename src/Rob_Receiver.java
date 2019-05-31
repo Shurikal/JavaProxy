@@ -1,5 +1,3 @@
-package robControlPanel;
-
 import java.io.DataInputStream;
 import java.net.Socket;
 

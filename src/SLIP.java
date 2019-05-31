@@ -1,5 +1,3 @@
-package robControlPanel;
-
 public class SLIP {
     /**
      * Creates a SLIP object using the supplied buffers.

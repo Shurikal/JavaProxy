@@ -1,4 +1,3 @@
-package robControlPanel;
 
 import java.io.IOException;
 

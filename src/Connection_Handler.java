@@ -1,5 +1,3 @@
-package robControlPanel;
-
 import java.util.ArrayList;
 
 public class Connection_Handler implements Runnable
