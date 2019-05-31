@@ -6,7 +6,6 @@ import java.time.format.DateTimeFormatter;
 public class GUI
 {
     private JTextArea log;
-
     private JButton connectRob1, connectRob2, disconnectRob1,disconnectRob2, controlPanel;
 
     private JTextField cmdField;
