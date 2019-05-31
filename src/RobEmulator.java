@@ -13,11 +13,16 @@ public class RobEmulator
 
     private ByteFifo tx,rx;
 
+    private boolean buttonA, buttonB,buttonX, buttonY;
+
+    private byte[] transmit;
+
     public RobEmulator() {
 
         tx = new ByteFifo(2047);
         rx = new ByteFifo(2047);
         cmd = new CmdInt(new SLIP(rx, tx));
+        transmit = new byte[4];
 
         try {
             socket = new ServerSocket(5555);
@@ -39,7 +44,20 @@ public class RobEmulator
 
             while(!client.isClosed()){
                  if (cmd.readCmd() == CmdInt.Type.Cmd) {
-                    System.out.println(cmd.getInt());
+
+                     int i = cmd.getInt();
+
+                     transmit[0] = (byte) ((i >> 24) & 0xff);
+                     transmit[1] = (byte) ((i >> 16) & 0xff);
+                     transmit[2] = (byte) ((i >> 8) & 0xff);
+                     transmit[3] = (byte) ((i >> 0) & 0xff);
+
+                     System.out.println(transmit[2]);
+
+                     int r = (i>>4 & 0x0F)-7;
+                     int l = (i & 0x0F)-7;
+                     System.out.println("R :"+r + " L :"+l);
+
                 }
                 try{
                     Thread.sleep(10);
