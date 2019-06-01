@@ -13,8 +13,6 @@ public class RobEmulator
 
     private ByteFifo tx,rx;
 
-    private boolean buttonA, buttonB,buttonX, buttonY;
-
     private byte[] transmit;
 
     public RobEmulator() {
@@ -52,13 +50,24 @@ public class RobEmulator
                      transmit[2] = (byte) ((i >> 8) & 0xff);
                      transmit[3] = (byte) ((i >> 0) & 0xff);
 
-                     System.out.println(transmit[2]);
+                     int r = (transmit[3]>>4 & 0x0F)-7;
+                     int l = (transmit[3] & 0x0F)-7;
 
-                     int r = (i>>4 & 0x0F)-7;
-                     int l = (i & 0x0F)-7;
-                     System.out.println("R :"+r + " L :"+l);
+                     boolean buttonA = ((transmit[2]&0x01) !=0);
+                     boolean buttonB = ((transmit[2]&0x02) !=0);
+                     boolean buttonX = ((transmit[2]&0x04) !=0);
+                     boolean buttonY = ((transmit[2]&0x08) !=0);
+                     boolean buttonRZ= ((transmit[2]&0x10) !=0);
 
-                }
+                     int zylValue = transmit[1]&0x0F;
+
+                     //System.out.println("A: "+buttonA+" B: "+buttonB+" Y: "+buttonY+" X: "+buttonX);
+                     //System.out.println("R :"+r + " L :"+l);
+                     //System.out.println(zylValue);
+                     //System.out.println(buttonRZ);
+
+                     System.out.println((int)(zylValue*(87.0/15.0)+8));
+                 }
                 try{
                     Thread.sleep(10);
                 }catch(Exception e){ }
