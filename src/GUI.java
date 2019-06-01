@@ -26,6 +26,9 @@ public class GUI
 
     private JScrollPane scrollPane;
 
+    /**
+     *
+     */
     public GUI() {
         fenster = new JFrame("Java Proxy");
 
@@ -50,6 +53,10 @@ public class GUI
         new Thread(robs).start();
     }
 
+    /**
+     *
+     * @return
+     */
     private JPanel topPanel() {
         JPanel top = new JPanel();
         top.setLayout(new GridLayout(2,3));
@@ -82,6 +89,9 @@ public class GUI
         return top;
     }
 
+    /**
+     *
+     */
     private void connectRob1() {
         rob1 = null;
         rob1 = new Rob_Connection(address1,port1,"Rob1");
@@ -92,6 +102,9 @@ public class GUI
         }
     }
 
+    /**
+     *
+     */
     private void connectRob2() {
         rob2 = null;
         rob2 = new Rob_Connection(address2,port2,"Rob2");
@@ -102,6 +115,10 @@ public class GUI
         }
     }
 
+    /**
+     *
+     * @return
+     */
     private JPanel centerPanel() {
         JPanel center = new JPanel();
 
@@ -117,6 +134,10 @@ public class GUI
         return center;
     }
 
+    /**
+     *
+     * @return
+     */
     private JPanel botPanel() {
         JPanel bot = new JPanel();
         bot.setLayout(new GridLayout(1,2));
@@ -147,6 +168,10 @@ public class GUI
         return bot;
     }
 
+    /**
+     *
+     * @param s
+     */
     public void addText(String s) {
         log.append( LocalTime.now().format(DateTimeFormatter.ofPattern("H:m:s.S"))+ " : " + s + "\r\n");
         if(autoscroll){
@@ -154,6 +179,9 @@ public class GUI
         }
     }
 
+    /**
+     *
+     */
     private void sendToAll() {
         if(rob1 != null && rob2 !=null) {
             if(rob1.connected() && rob2.connected()){
@@ -168,6 +196,9 @@ public class GUI
         }
     }
 
+    /**
+     *
+     */
     private void sendToRob1() {
         if(rob1 != null && rob1.connected()){
             try {
@@ -180,6 +211,9 @@ public class GUI
         }
     }
 
+    /**
+     *
+     */
     private void sendToRob2() {
         if(rob2 != null && rob2.connected()){
             try{
@@ -190,10 +224,17 @@ public class GUI
         }
     }
 
+    /**
+     *
+     */
     private void openControlPanel1(){
         new ControlPanel(rob1);
     }
 
+    /**
+     *
+     * @param fenster
+     */
     private void createMenuBar(JFrame fenster)
     {
         JMenuBar menuBar = new JMenuBar();
@@ -221,18 +262,30 @@ public class GUI
         menu.add(entry);
     }
 
+    /**
+     *
+     */
     private void settings(){
         new Settings(fenster, this);
     }
 
+    /**
+     *
+     */
     private void quit(){
         System.exit(0);
     }
 
+    /**
+     *
+     */
     private void showInfo(){
         new Info(fenster);
     }
 
+    /**
+     *
+     */
     public void autoscroll(){
         JScrollBar vertical = scrollPane.getVerticalScrollBar();
         vertical.setValue( vertical.getMaximum() );

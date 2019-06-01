@@ -23,12 +23,21 @@ public class Rob_Receiver implements Runnable
 
     private boolean rxEscapeMode = false;
 
+    /**
+     *
+     * @param socket
+     * @param rx
+     * @param cmd
+     */
     public Rob_Receiver(Socket socket, ByteFifo rx, CmdInt cmd) {
         this.socket = socket;
         this.rx = rx;
         this.cmd = cmd;
     }
 
+    /**
+     *
+     */
     public void run(){
         //Try to create a new InputStream
         try {
@@ -69,7 +78,10 @@ public class Rob_Receiver implements Runnable
         System.out.println("Socket closed -> Input Thread terminated");
     }
 
-
+    /**
+     *
+     * @param b
+     */
     public void addByte(byte b){
         if (b == OPEN) {
             // ignore

@@ -25,7 +25,10 @@ public class ControlPanel extends JFrame implements Runnable {
 
     private byte[] tx;
 
-
+    /**
+     * Creates a new Control Panel
+     * @param rob
+     */
     public ControlPanel(Rob_Connection rob) {
         setPreferredSize(new Dimension(200, 200));
         this.rob = rob;
@@ -41,9 +44,10 @@ public class ControlPanel extends JFrame implements Runnable {
         new Thread(this).start();
     }
 
+    /**
+     *
+     */
     public void run() {
-
-
         List<Controller> gamepads = Arrays
                 .stream(ControllerEnvironment.getDefaultEnvironment().getControllers()).filter(controller ->
                         controller.getType().equals(Controller.Type.GAMEPAD)).collect(Collectors.toList());

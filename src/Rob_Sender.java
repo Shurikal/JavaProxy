@@ -22,12 +22,25 @@ public class Rob_Sender implements Runnable {
 
     private CmdInt cmd;
 
+    /**
+     *
+     * @param socket
+     * @param tx
+     * @param cmd
+     */
     public Rob_Sender(Socket socket, ByteFifo tx, CmdInt cmd) {
         this.socket = socket;
         this.tx = tx;
         this.cmd = cmd;
     }
 
+    /**
+     *
+     * @param socket
+     * @param tx
+     * @param cmd
+     * @param isServer
+     */
     public Rob_Sender(Socket socket,ByteFifo tx, CmdInt cmd,Boolean isServer) {
         this.socket = socket;
         this.tx = tx;
@@ -35,6 +48,9 @@ public class Rob_Sender implements Runnable {
         this.isServer = isServer;
     }
 
+    /**
+     *
+     */
     public void run() {
         try {
             out = new DataOutputStream(socket.getOutputStream());
@@ -67,16 +83,26 @@ public class Rob_Sender implements Runnable {
         System.out.println("Socket closed -> Output Thread terminated");
     }
 
+    /**
+     *
+     */
     private void sendHeartbeat(){
         try {
             out.write(HEARTBEAT);
         } catch (Exception e){}
     }
 
+    /**
+     *
+     * @param b
+     */
     public synchronized void sendByte(Byte b){
         tx.enqueue(b);
     }
 
+    /**
+     *
+     */
     private synchronized void writeToOutput(){
         if (tx.availToRead() > 0) {
             while (tx.availToRead() > 0) {

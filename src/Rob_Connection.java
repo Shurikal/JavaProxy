@@ -11,6 +11,12 @@ public class Rob_Connection
 
     private ByteFifo rx,tx;
 
+    /**
+     *
+     * @param ip, the IP address
+     * @param port, the Port
+     * @param name, the name of the client
+     */
     public Rob_Connection(String ip, int port, String name) {
         this.ip = ip;
         this.port = port;
@@ -28,14 +34,25 @@ public class Rob_Connection
         }
     }
 
+    /**
+     *
+     * @return the name of the client
+     */
     public String getName(){
         return name;
     }
 
+    /**
+     * Sets a new Name
+     * @param name, new name
+     */
     public void setName(String name){
         this.name = name;
     }
 
+    /**
+     * Closes the client socket
+     */
     public void disconnect() {
         try {
             socket.getOutputStream().close();
@@ -45,6 +62,10 @@ public class Rob_Connection
         }catch(Exception e){}
     }
 
+    /**
+     *
+     * @return True if socket is connected
+     */
     public  boolean connected() {
         if(socket == null)
         {
