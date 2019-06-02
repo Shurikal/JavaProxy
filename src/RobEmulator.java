@@ -62,11 +62,11 @@ public class RobEmulator
                      int zylValue = transmit[1]&0x0F;
 
                      //System.out.println("A: "+buttonA+" B: "+buttonB+" Y: "+buttonY+" X: "+buttonX);
-                     //System.out.println("R :"+r + " L :"+l);
+                     System.out.println("R :"+r + " L :"+l);
                      //System.out.println(zylValue);
                      //System.out.println(buttonRZ);
 
-                     System.out.println((int)(zylValue*(87.0/15.0)+8));
+                     //System.out.println((int)(zylValue*(87.0/15.0)+8));
                  }
                 try{
                     Thread.sleep(10);

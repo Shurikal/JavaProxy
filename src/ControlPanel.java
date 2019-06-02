@@ -21,6 +21,8 @@ public class ControlPanel extends JFrame implements Runnable {
 
     private int transmit;
 
+    private boolean buttonLT3;
+
     private float ryBuffer=8.0f, oldRY;
 
     private byte[] tx;
@@ -69,28 +71,26 @@ public class ControlPanel extends JFrame implements Runnable {
 
                 if(component.getIdentifier() == Component.Identifier.Axis.X){
                     x = value;
-                }
-                if(component.getIdentifier() == Component.Identifier.Axis.Y){
+                }else if(component.getIdentifier() == Component.Identifier.Axis.Y){
                     y = value;
-                }
-                if(component.getIdentifier() == Component.Identifier.Button.A){
+                }else if(component.getIdentifier() == Component.Identifier.Button.A){
                     buttonA = (value ==1)? (byte)0x01:0x00;
-                }
-                if(component.getIdentifier() == Component.Identifier.Button.B){
+                }else if(component.getIdentifier() == Component.Identifier.Button.B){
                     buttonB = (value ==1)? (byte)0x02:0x00;
-                }
-                if(component.getIdentifier() == Component.Identifier.Button.X){
+                }else if(component.getIdentifier() == Component.Identifier.Button.X){
                     buttonX = (value ==1)? (byte)0x04:0x00;
-                }
-                if(component.getIdentifier() == Component.Identifier.Button.Y){
+                }else if(component.getIdentifier() == Component.Identifier.Button.Y){
                     buttonY = (value ==1)? (byte)0x08:0x00;
-                }
-                if(component.getIdentifier() == Component.Identifier.Axis.RZ){
+                }else if(component.getIdentifier() == Component.Identifier.Axis.RZ){
                     buttonRZ = (value ==1)? (byte)0x10:0x00;
-                }
-                if(component.getIdentifier() == Component.Identifier.Axis.RY){
+                }else if(component.getIdentifier() == Component.Identifier.Axis.RY){
                     oldRY = -1*value;
+                }else if(component.getIdentifier() == Component.Identifier.Button.LEFT_THUMB3){
+                    buttonLT3 = (value==1);
+                }else{
+                    System.out.println(component.getIdentifier());
                 }
+
             }
 
             if(oldRY>0.15 || oldRY<-0.15){
@@ -103,9 +103,33 @@ public class ControlPanel extends JFrame implements Runnable {
 
             double alpha = -Math.PI/4;
 
-            float r = -1*(float) (x*Math.cos(alpha)-y*Math.sin(alpha));
-            float l = -1*(float) (x*Math.sin(alpha)+y*Math.cos(alpha));
 
+            float r,l;
+            float range = 0.2f;
+            if(y == -1 && x<range && x>-range && !buttonLT3 ){
+                l =1;
+                r = 1;
+            }else if(y == 1 && x<range && x>-range && !buttonLT3){
+                l = -1;
+                r = -1;
+            }else if(x == 1 && y<range && y>-range && !buttonLT3){
+                l = 0.7f;
+                r = -0.7f;
+            }else if(x == -1 && y<range && y>-range && !buttonLT3){
+                l = -0.7f;
+                r = 0.7f;
+            }else if(!buttonLT3){
+                r = -1 * (float) (x * Math.cos(alpha) - y * Math.sin(alpha));
+                l = -1 * (float) (x * Math.sin(alpha) + y * Math.cos(alpha));
+            }else if(buttonLT3 && (x>0.2|| x<-0.2)){
+                float z;
+                z = (x>0)? -0.2f:0.2f;
+                l = (x+z)/.8f;
+                r = (-x-z)/.8f;
+            }else{
+                l =0;
+                r = 0;
+            }
             tx[3]=getByte(scale(r),scale(l));
             tx[2]= (byte)(buttonA|buttonB|buttonY|buttonX|buttonRZ);
             tx[1]=(byte)ryBuffer;
