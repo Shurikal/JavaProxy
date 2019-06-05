@@ -138,8 +138,15 @@ public class CmdInt {
      * @return last received integer
      */
     public int getInt() {
+        lastcmd =cmd;
         return cmd;
     }
+
+    public int getLastcmd(){
+        return lastcmd;
+    }
+
+    private int lastcmd;
 
     private SLIP slip;
     private byte header = 0;

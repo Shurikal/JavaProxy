@@ -7,6 +7,8 @@ public class Connection_Handler implements Runnable
 
     private ArrayList<Rob_Connection> robs;
 
+    private int lastStateRob1 =-1;
+
     public Connection_Handler(GUI gui) {
         robs = new ArrayList<>();
     this.gui = gui;
@@ -44,4 +46,5 @@ public class Connection_Handler implements Runnable
             }catch (Exception e){}
         }
     }
+
 }
