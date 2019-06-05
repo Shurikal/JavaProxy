@@ -47,20 +47,28 @@ public class ControlPanel extends JFrame implements Runnable {
     }
 
     /**
-     *
+     *  } catch (Exception e){
+            System.out.println(e);
+            gamepad =null;
+        }
      */
     public void run() {
         List<Controller> gamepads = Arrays
                 .stream(ControllerEnvironment.getDefaultEnvironment().getControllers()).filter(controller ->
                         controller.getType().equals(Controller.Type.GAMEPAD)).collect(Collectors.toList());
-        Controller gamepad = gamepads.get(0);
+
+        Controller gamepad;
+        if(!gamepads.isEmpty()) {
+            gamepad = gamepads.get(0);
+        }else{
+            gamepad = null;
+        }
 
         Component component;
         float value;
 
         Event event;
-        while (true) {
-            gamepad.poll();
+        while (gamepad!=null && gamepad.poll()) {
 
             EventQueue eq = gamepad.getEventQueue();
             event = new Event();
@@ -94,12 +102,12 @@ public class ControlPanel extends JFrame implements Runnable {
             }
 
             if(oldRY>0.15 || oldRY<-0.15){
-                ryBuffer += oldRY;
+                ryBuffer += oldRY*0.1f;
                 ryBuffer = (ryBuffer >15)? 15: ryBuffer;
                 ryBuffer = (ryBuffer <0)? 0: ryBuffer;
             }
 
-            System.out.println(ryBuffer);
+            //System.out.println(ryBuffer);
 
             double alpha = -Math.PI/4;
 
@@ -153,7 +161,7 @@ public class ControlPanel extends JFrame implements Runnable {
             }
 
             try {
-                Thread.sleep(1000);
+                Thread.sleep(20);
             } catch (Exception e) {
             }
         }

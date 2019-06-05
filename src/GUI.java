@@ -18,9 +18,9 @@ public class GUI
 
     private Connection_Handler robs;
 
-    private String address1 = "localhost", address2 = "169.254.1.2";
+    private String address1 = "169.254.1.1", address2 = "169.254.1.2";
 
-    private int port1 = 5555, port2 = 2000;
+    private int port1 = 2000, port2 = 2000;
 
     private boolean autoscroll;
 
