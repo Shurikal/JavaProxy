@@ -96,7 +96,7 @@ public class ControlPanel extends JFrame implements Runnable {
                 }else if(component.getIdentifier() == Component.Identifier.Button.LEFT_THUMB3){
                     buttonLT3 = (value==1);
                 }else{
-                    System.out.println(component.getIdentifier());
+                    //System.out.println(component.getIdentifier());
                 }
 
             }
