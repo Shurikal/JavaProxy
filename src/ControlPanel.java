@@ -29,12 +29,6 @@ public class ControlPanel extends JFrame implements Runnable {
         new Thread(this).start();
     }
 
-    /**
-     *  } catch (Exception e){
-            System.out.println(e);
-            gamepad =null;
-        }
-     */
     public void run() {
 
         while (true) {
