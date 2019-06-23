@@ -22,7 +22,7 @@ public class RobEmulator
         transmit = new byte[4];
 
         try {
-            socket = new ServerSocket(5555);
+            socket = new ServerSocket(5551);
         }catch(Exception e) { }
 
         while(true){
@@ -31,6 +31,8 @@ public class RobEmulator
                 System.out.println("Warte auf Rob");
                 client = socket.accept();
                 System.out.println("Rob verbunden");
+                System.out.println(client.getInetAddress());
+                System.out.println(client.getLocalAddress());
 
             }catch (Exception e){}
 
@@ -41,7 +43,7 @@ public class RobEmulator
 
             while(!client.isClosed()){
                  if (cmd.readCmd() == CmdInt.Type.Cmd) {
-
+                     System.out.println(cmd.getInt());
                  }
                 try{
                     Thread.sleep(10);
