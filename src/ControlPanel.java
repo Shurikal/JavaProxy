@@ -111,7 +111,6 @@ public class ControlPanel extends JFrame implements Runnable {
 
             double alpha = -Math.PI/4;
 
-
             float r,l;
             float range = 0.2f;
             if(y == -1 && x<range && x>-range && !buttonLT3 ){
@@ -150,6 +149,7 @@ public class ControlPanel extends JFrame implements Runnable {
             //System.out.println("X: "+ x + " Y: "+y);
             //System.out.println("A: "+buttonA+" B: "+buttonB+" Y: "+buttonY+" X: "+buttonX);
             //System.out.println("XY: "+ getByte(scale(r),scale(l)));
+            //System.out.println("R : " + r + " L : "+ l);
             //System.out.println(buttonRZ);
 
             if(!this.isVisible()){

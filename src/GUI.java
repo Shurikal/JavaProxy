@@ -228,7 +228,7 @@ public class GUI
      *
      */
     private void openControlPanel1(){
-        new ControlPanel(rob1);
+        new ControlPanel(rob2);
     }
 
     /**
