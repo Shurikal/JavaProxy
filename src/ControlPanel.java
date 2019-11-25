@@ -17,7 +17,7 @@ public class ControlPanel extends JFrame implements Runnable {
 
     private float x,y;
 
-    private byte buttonA,buttonB,buttonX,buttonY, buttonRZ;
+    private byte buttonA,buttonB,buttonX,buttonY, buttonRZ,bButtonLT3;
 
     private int transmit;
 
@@ -95,12 +95,14 @@ public class ControlPanel extends JFrame implements Runnable {
                     oldRY = -1*value;
                 }else if(component.getIdentifier() == Component.Identifier.Button.LEFT_THUMB3){
                     buttonLT3 = (value==1);
+                    bButtonLT3 = (value ==1)? (byte)0x20:0x00;
                 }else{
                     //System.out.println(component.getIdentifier());
                 }
 
             }
 
+            //fuer Spannzylinder
             if(oldRY>0.15 || oldRY<-0.15){
                 ryBuffer += oldRY*0.1f;
                 ryBuffer = (ryBuffer >15)? 15: ryBuffer;
@@ -109,9 +111,12 @@ public class ControlPanel extends JFrame implements Runnable {
 
             //System.out.println(ryBuffer);
 
+
+            //Drehwinkel fuer Lineare Abbildung
             double alpha = -Math.PI/4;
 
             float r,l;
+            /*
             float range = 0.2f;
             if(y == -1 && x<range && x>-range && !buttonLT3 ){
                 l =1;
@@ -137,9 +142,17 @@ public class ControlPanel extends JFrame implements Runnable {
                 l =0;
                 r = 0;
             }
-            tx[3]=getByte(scale(r),scale(l));
-            tx[2]= (byte)(buttonA|buttonB|buttonY|buttonX|buttonRZ);
-            tx[1]=(byte)ryBuffer;
+
+            */
+
+            //neu Alternative Motorenregelung
+            l = y+x;
+            r = y-x;
+
+            tx[3]=(byte)(l*127);
+            tx[2]=(byte)(r*127);
+            tx[1]= (byte)(buttonA|buttonB|buttonY|buttonX|buttonRZ|bButtonLT3);
+            tx[0]=(byte)ryBuffer;
 
             transmit = ((int)tx[0]) << 24;
             transmit |= (((int)tx[1]) & 0xff) << 16;
