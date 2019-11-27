@@ -50,8 +50,8 @@ public class RobEmulator
                      transmit[2] = (byte) ((i >> 8) & 0xff);
                      transmit[3] = (byte) ((i >> 0) & 0xff);
 
-                     int r = (transmit[3]>>4 & 0x0F)-7;
-                     int l = (transmit[3] & 0x0F)-7;
+                     int r = (transmit[2]);
+                     int l = (transmit[3]);
 
                      boolean buttonA = ((transmit[2]&0x01) !=0);
                      boolean buttonB = ((transmit[2]&0x02) !=0);

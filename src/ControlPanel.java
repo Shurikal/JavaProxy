@@ -17,7 +17,7 @@ public class ControlPanel extends JFrame implements Runnable {
 
     private float x,y;
 
-    private byte buttonA,buttonB,buttonX,buttonY, buttonRZ;
+    private byte buttonA,buttonB,buttonX,buttonY, buttonRZ,bButtonLT3;
 
     private int transmit;
 
@@ -53,9 +53,15 @@ public class ControlPanel extends JFrame implements Runnable {
         }
      */
     public void run() {
+
+        System.out.println(ControllerEnvironment.getDefaultEnvironment().getControllers());
+
         List<Controller> gamepads = Arrays
                 .stream(ControllerEnvironment.getDefaultEnvironment().getControllers()).filter(controller ->
                         controller.getType().equals(Controller.Type.GAMEPAD)).collect(Collectors.toList());
+
+
+
 
         Controller gamepad;
         if(!gamepads.isEmpty()) {
@@ -90,17 +96,22 @@ public class ControlPanel extends JFrame implements Runnable {
                 }else if(component.getIdentifier() == Component.Identifier.Button.Y){
                     buttonY = (value ==1)? (byte)0x08:0x00;
                 }else if(component.getIdentifier() == Component.Identifier.Axis.RZ){
-                    buttonRZ = (value ==1)? (byte)0x10:0x00;
+                    //Windows hat andere belegung!
                 }else if(component.getIdentifier() == Component.Identifier.Axis.RY){
                     oldRY = -1*value;
                 }else if(component.getIdentifier() == Component.Identifier.Button.LEFT_THUMB3){
                     buttonLT3 = (value==1);
+                    bButtonLT3 = (value ==1)? (byte)0x20:0x00;
+                }else if(component.getIdentifier() == Component.Identifier.Axis.Z){
+                    System.out.println(value);
+                    buttonRZ = (value <-0.9)? (byte)0x10:0x00;
                 }else{
-                    //System.out.println(component.getIdentifier());
+                    System.out.println(component.getIdentifier());
                 }
 
             }
 
+            //fuer Spannzylinder
             if(oldRY>0.15 || oldRY<-0.15){
                 ryBuffer += oldRY*0.1f;
                 ryBuffer = (ryBuffer >15)? 15: ryBuffer;
@@ -109,7 +120,9 @@ public class ControlPanel extends JFrame implements Runnable {
 
             //System.out.println(ryBuffer);
 
+
             double alpha = -Math.PI/4;
+
 
             float r,l;
             float range = 0.2f;
@@ -151,6 +164,7 @@ public class ControlPanel extends JFrame implements Runnable {
             //System.out.println("XY: "+ getByte(scale(r),scale(l)));
             //System.out.println("R : " + r + " L : "+ l);
             //System.out.println(buttonRZ);
+
 
             if(!this.isVisible()){
                 this.dispose();
